@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <!-- Quiz Header -->
+        <div class="quiz-header">
+          <h1>Quiz Title</h1>
+        </div>
+        <!-- Quiz Questions -->
+         {% for q in questions %}
+        <div class="quiz-questions">
+          <div class="question">
+            <b>{{q.id}})</b><h2>{{ q.question }}</h2>
+            <input type="radio" name="answer" value="A">A) {{ q.optionA  }}
+            <input type="radio" name="answer1" value="B">B) {{ q.optionB  }}
+            <input type="radio" name="answer2" value="C">C) {{ q.optionC  }}
+            <input type="radio" name="answer3" value="D">C) {{ q.optionD  }}
+          </div>
+        {% endfor %}
+          <!-- Add more questions here -->
+        </div>
+        <!-- Quiz Submit Button -->
+        <div class="quiz-submit">
+          <button>Submit Quiz</button>
+        </div>
+      </div>
+      
+      
+    
+</body>
+</html>
