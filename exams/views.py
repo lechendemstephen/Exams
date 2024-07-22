@@ -38,18 +38,29 @@ def question(request):
 # home
 #_____________________________________________________________________________
 def home(request): 
+    
 
-
-    return render(request, 'quiz/pages/home.html')
+    context ={ 
+        'home': "active",
+    }
+    return render(request, 'quiz/pages/home.html', context)
 
 #about 
 # ________________________________________________________________________________
 def about(request): 
 
-    return render(request, 'quiz/pages/about.html' )
+    context ={
+        'about': "active",
+    }
+
+    return render(request, 'quiz/pages/about.html', context )
 
 # contact
 # _______________________________________________________________________
 def contact(request): 
 
-    return render(request, 'quiz/pages/contact.html' )
+    context = {
+        'contact': "active",
+    }
+
+    return render(request, 'quiz/pages/contact.html', context)
