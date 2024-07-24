@@ -4,27 +4,32 @@ from .models import Signup
 from django.contrib import messages # type: ignore
 from django.contrib.auth import login, authenticate, logout # type: ignore
 from django.contrib.auth.decorators import login_required # type: ignore
+from django.contrib.auth.hashers import check_password, make_password # type: ignore
 # Create your views here.
 
-def signup(request): 
+def signup(request):
     if request.method == "POST": 
         form = SignupForm(request.POST)
-
         if form.is_valid(): 
+           try: 
+            name = form.cleaned_data['name']
+            password = make_password(form.cleaned_data['password']) 
             user = Signup(
-                name = form.cleaned_data['name'],
+                name = name ,
                 email = form.cleaned_data['email'],
-                password = form.cleaned_data['password'],
-                repeat_password = form.cleaned_data['repeat_password']
+                password = password,
+                repeat_password = make_password(form.cleaned_data['repeat_password'])
             )
             user.save()
-            user = authenticate(username= form.cleaned_data['name'], password=form.cleaned_data['password'] )
+            user = authenticate(username= name, password=password )
             login(user)
-
+            print('logged in')
             messages.success(request, 'Succesfully signed-Up')
             return redirect('courses')
+           except: 
+               pass
         else: 
-            form = SignupForm()
+           form = SignupForm()
         
     return render(request, 'quiz/accounts/signup.html' )
 
@@ -33,15 +38,16 @@ def login(request):
     if request.method == "POST": 
         form = LoginForm(request.POST)
         if form.is_valid(): 
-            username = form.cleaned_data['username']
+            username = form.cleaned_data['name']
             password = form.cleaned_data['password']
-            # creating an instance of the Signup
-            user = Signup.objects.filter()
-            if user.name == username and user.password == password: 
-                print('Login')
-                return redirect('home')
-    else: 
-        form = LoginForm
+            user = authenticate(request, username=username, password=password)
+            if user: 
+                login(request, user)
+                print('login successfull')
+                return redirect('home')   
+        else: 
+            form = LoginForm()
+             
 
     return render(request, 'quiz/accounts/signin.html' )
 

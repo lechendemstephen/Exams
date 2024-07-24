@@ -31,7 +31,7 @@
               <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5">Sign-In</h2>
   
-                <form action="" method+"POST">
+                <form action ="" method ="POST">
                    {% csrf_token %}
                   <div data-mdb-input-init class="form-outline mb-4">
                     <input type="text" id="form3Example3cg" class="form-control form-control-lg" name="name" />
@@ -39,7 +39,7 @@
                   </div>
   
                   <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="password" id="form3Example4cg" class="form-control form-control-lg"name="password" />
+                    <input type="password" id="form3Example4cg" class="form-control form-control-lg" name="password" />
                     <label class="form-label" for="form3Example4cg">Password</label>
                   </div>
 
@@ -53,7 +53,7 @@
   
                   <div class="d-flex justify-content-center">
                     <button  type="submit" data-mdb-button-init
-                      data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                      data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                   </div>
   
                   <p class="text-center text-muted mt-5 mb-0">You don't have account? <a href="{% url 'signup' %}"

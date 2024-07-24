@@ -3,7 +3,7 @@ from .models import Signup
 # Register your models here.
 
 class SignupAdmin(admin.ModelAdmin): 
-    list_display = ('name', 'email', 'password', 'repeat_password', 'jioned_date')
+    list_display = ('name', 'email', 'password', 'jioned_date')
 
 
 admin.site.register(Signup, SignupAdmin)
