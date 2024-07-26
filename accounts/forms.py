@@ -1,13 +1,13 @@
 from django import forms  # type: ignore
-from .models import Signup
+from .models import User
 
 class SignupForm(forms.ModelForm): 
     class Meta: 
-        model = Signup
-        fields = ('name', 'email', 'password', 'repeat_password')
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'password')
 
 
 class LoginForm(forms.ModelForm):
     class Meta:
-        model = Signup
-        fields = ("name","password")
+        model = User
+        fields = ("email", "password")

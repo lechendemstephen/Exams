@@ -1,5 +1,4 @@
 from django.shortcuts import render # type: ignore
-from accounts.models import Signup
 # Create your views here.
 
 def courses(request): 

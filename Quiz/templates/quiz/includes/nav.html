@@ -20,7 +20,7 @@
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
     {% if user.is_authenticated %}
-    <label for="profile">Welcome! {{ user.username }}</label>  &nbsp; &nbsp;
+    <label for="profile">Welcome! </label>  &nbsp; &nbsp;
     <a href="{% url 'logout' %}"><i class="bi bi-person-circle"></i></a>
     {% else %}
     <a class="btn-getstarted" href="{% url 'signup' %}">Create acoount</a>

@@ -1,33 +1,40 @@
 from django.shortcuts import render, redirect # type: ignore
 from .forms import SignupForm, LoginForm
-from .models import Signup
-from django.contrib import messages # type: ignore
+from django.contrib import messages, auth# type: ignore
 from django.contrib.auth import login, authenticate, logout # type: ignore
 from django.contrib.auth.decorators import login_required # type: ignore
 from django.contrib.auth.hashers import check_password, make_password # type: ignore
+from .models import User
+
 # Create your views here.
 
 def signup(request):
     if request.method == "POST": 
         form = SignupForm(request.POST)
         if form.is_valid(): 
-           try: 
-            name = form.cleaned_data['name']
-            password = make_password(form.cleaned_data['password']) 
-            user = Signup(
-                name = name ,
-                email = form.cleaned_data['email'],
-                password = password,
-                repeat_password = make_password(form.cleaned_data['repeat_password'])
-            )
-            user.save()
-            user = authenticate(username= name, password=password )
-            login(user)
-            print('logged in')
-            messages.success(request, 'Succesfully signed-Up')
-            return redirect('courses')
-           except: 
-               pass
+            try: 
+                first_name =form.cleaned_data['first_name']
+                last_name  =form.cleaned_data['last_name']
+                email      =form.cleaned_data['email']
+                password   =form.cleaned_data['password']
+                confirm_password =form.cleaned_data['confirm_password']
+                if confirm_password != password: 
+                    messages.error(request, "password and confirm password don't mstch" )
+                else:
+                    user = User.objects.create_user(
+                        first_name = first_name,
+                        last_name = last_name,
+                        email = email, 
+                        password = password, 
+                    )
+                    user.save()
+                    user = authenticate(email=email, password=password)
+                    login(user)
+                    messages.success(request, 'Account sucessfully created')
+                    return redirect('home')
+            except: 
+                pass
+        
         else: 
            form = SignupForm()
         
@@ -38,17 +45,16 @@ def login(request):
     if request.method == "POST": 
         form = LoginForm(request.POST)
         if form.is_valid(): 
-            username = form.cleaned_data['name']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user: 
-                login(request, user)
+            user = authenticate(request, email= email, password = password)
+            if user is not None: 
+                login(user)
                 print('login successfull')
-                return redirect('home')   
-        else: 
-            form = LoginForm()
+                return redirect('home') 
+    else: 
+        form = LoginForm()
              
-
     return render(request, 'quiz/accounts/signin.html' )
 
 

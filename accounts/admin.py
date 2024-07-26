@@ -1,9 +1,10 @@
 from django.contrib import admin # type: ignore
-from .models import Signup
+from django.contrib.auth.admin import UserAdmin # type: ignore
+from .models import User
 # Register your models here.
 
-class SignupAdmin(admin.ModelAdmin): 
-    list_display = ('name', 'email', 'password', 'jioned_date')
+class UserAdmin(admin.ModelAdmin): 
+    list_display = ('first_name', 'last_name', 'username', 'email', 'password', 'date_jioned')
 
-
-admin.site.register(Signup, SignupAdmin)
+   
+admin.site.register(User, UserAdmin)
